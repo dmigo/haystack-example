@@ -14,7 +14,7 @@ components:
     type: BM25Retriever
     params:
       document_store: DocumentStore
-      top_k: 25
+      top_k: 5
   - name: TextFileConverter
     type: TextConverter
   - name: Preprocessor
