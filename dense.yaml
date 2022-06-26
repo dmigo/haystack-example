@@ -9,11 +9,13 @@ components:
       password: "admin"
       port: 9200
       scheme: "http"
-      index: "document-benchmark-sparse"
+      index: "document-benchmark-dense"
+      similarity: "cosine"
   - name: Retriever
-    type: BM25Retriever
+    type: EmbeddingRetriever
     params:
       document_store: DocumentStore
+      embedding_model: "deepset/roberta-base-squad2"
       top_k: 5
   - name: TextFileConverter
     type: TextConverter
@@ -23,7 +25,6 @@ components:
       split_by: passage
       split_length: 1
       split_respect_sentence_boundary: False
-
 
 pipelines:
   - name: query
