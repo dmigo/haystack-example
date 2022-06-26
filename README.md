@@ -23,11 +23,11 @@ pip install -r requirements.txt
 Now we need to prepare and index our data by semantics. We will use Game of Thrones wiki data. The data will be downloaded from a prepared archive and stored in opensearch. Depending on your internet connection and wether your machine has a GPU this step might take quite some time.
 
 ```shell
-python ./index.py
+python index.py
 ```
 
 Once the index is ready you can ask your questions as much as you want.
 
 ```shell
-python ./ask.py
+python ask.py "Who is the father of Arya Stark?"
 ```

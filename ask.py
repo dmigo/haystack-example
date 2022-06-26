@@ -1,3 +1,4 @@
+import sys
 import logging
 from pathlib import Path
 from typing import List
@@ -12,6 +13,8 @@ CONFIG_PATH = Path("./dense.yaml")
 
 if __name__ == "__main__":
     question = "Who plays Arya Stark?"
+    if len(sys.argv) > 1:
+        question = sys.argv[1]
 
     logger.info("Starting")
     query_pipelilne = Pipeline.load_from_yaml(CONFIG_PATH, "query")
