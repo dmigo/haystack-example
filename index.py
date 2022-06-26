@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 
 DATA_LOCAL_PATH = Path("./data/wiki_gameofthrones_txt")
 DATA_GLOBAL_PATH = "https://s3.eu-central-1.amazonaws.com/deepset.ai-farm-qa/datasets/documents/wiki_gameofthrones_txt1.zip"
-CONFIG_PATH = Path("./dense.yaml")
+CONFIG_PATH = Path("./config/dense.yaml")
 
 
 def download_data():

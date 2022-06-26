@@ -8,7 +8,7 @@ from haystack import Pipeline, Answer
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-CONFIG_PATH = Path("./dense.yaml")
+CONFIG_PATH = Path("./config/dense.yaml")
 
 
 if __name__ == "__main__":
