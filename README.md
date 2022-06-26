@@ -8,19 +8,19 @@ You'll need [python](https://www.python.org/) and [docker-compose](https://docs.
 
 ## Start
 
-We'll need a data storage. So first run:
+We'll need a data storage. We have our `docker-compose` file with OpenSearch configured.
 
 ```shell
 docker-compose up -d
 ```
 
-We also need to install the python dependencies:
+We also need to install the python dependencies.
 
 ```shell
 pip install -r requirements.txt
 ```
 
-Now we need to index our data by semantics, this step might take quite some time if your computer doesn't have a GPU.
+Now we need to prepare and index our data by semantics. We will use Game of Thrones wiki data. The data will be downloaded from a prepared archive and stored in opensearch. Depending on your internet connection and wether your machine has a GPU this step might take quite some time.
 
 ```shell
 python ./index.py
