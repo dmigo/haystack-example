@@ -20,8 +20,14 @@ We also need to install the python dependencies:
 pip install -r requirements.txt
 ```
 
-Now we can execute our code with:
+Now we need to index our data by semantics, this step might take quite some time if your computer doesn't have a GPU.
 
 ```shell
-python ./run-haystack.py
+python ./index.py
+```
+
+Once the index is ready you can ask your questions as much as you want.
+
+```shell
+python ./ask.py
 ```
