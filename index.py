@@ -20,7 +20,7 @@ def get_file_paths(local_path: Path, s3_url: str) -> List[Path]:
         logger.info("Downloading data from S3")
         fetch_archive_from_http(url=s3_url, output_dir=local_path)
 
-    return [f.path for f in os.scandir(DATA_LOCAL_PATH)]
+    return [Path(f.path) for f in os.scandir(DATA_LOCAL_PATH)]
 
 
 if __name__ == "__main__":
