@@ -2,7 +2,7 @@ import sys
 import logging
 from pathlib import Path
 from typing import List
-from haystack import Pipeline, Answer
+from haystack import Answer, Pipeline
 
 
 logger = logging.getLogger(__name__)
@@ -21,8 +21,9 @@ if __name__ == "__main__":
 
     logger.info(f'Asking your question: "{question}"')
     result = query_pipelilne.run(question)
-    documents: List[Answer] = result["documents"]
+    documents: List[Answer] = result["answers"]
 
     logger.info("The result is ready and it is:")
     for answer in documents:
-        print(answer.content)
+        print(f"The answer is: '{answer.answer}' with confidence {answer.score}")
+        print(f"The context for the answer is: {answer.context}")

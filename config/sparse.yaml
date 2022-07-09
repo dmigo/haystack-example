@@ -9,7 +9,12 @@ components:
       password: "admin"
       port: 9200
       scheme: "http"
-      index: "document-benchmark-sparse"
+      index: "document-benchmark-sparse-1"
+      similarity: "cosine"
+  - name: Reader
+    type: FARMReader
+    params:
+      model_name_or_path: "deepset/roberta-base-squad2"
   - name: Retriever
     type: BM25Retriever
     params:
@@ -24,12 +29,13 @@ components:
       split_length: 1
       split_respect_sentence_boundary: False
 
-
 pipelines:
   - name: query
     nodes:
       - name: Retriever
         inputs: [Query]
+      - name: Reader
+        inputs: [Retriever]
 
   - name: indexing
     nodes:
@@ -41,4 +47,3 @@ pipelines:
         inputs: [Preprocessor]
       - name: DocumentStore
         inputs: [Retriever]
-
