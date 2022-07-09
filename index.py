@@ -2,8 +2,9 @@ import logging
 import os
 from pathlib import Path
 from typing import List
-from haystack import Document, Pipeline
-from haystack.utils import fetch_archive_from_http
+
+import s3fs
+from haystack import Pipeline
 
 
 logger = logging.getLogger(__name__)
@@ -16,11 +17,12 @@ CONFIG_PATH = Path("./config/dense.yaml")
 
 
 def get_file_paths(local_path: Path, s3_url: str) -> List[Path]:
-    if not DATA_LOCAL_PATH.exists():
+    if not local_path.exists():
         logger.info("Downloading data from S3")
-        fetch_archive_from_http(url=s3_url, output_dir=local_path)
+        fs = s3fs.S3FileSystem()
+        fs.download(s3_url, local_path)
 
-    return [Path(f.path) for f in os.scandir(DATA_LOCAL_PATH)]
+    return [Path(f.path) for f in os.scandir(local_path)]
 
 
 if __name__ == "__main__":
