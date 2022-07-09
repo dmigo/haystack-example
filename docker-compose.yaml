@@ -11,3 +11,15 @@ services:
       - CREATE_INDEX=True
       - "DISABLE_INSTALL_DEMO_CONFIG=true"
       - "DISABLE_SECURITY_PLUGIN=true"
+
+
+  # ray:
+  #   image: "rayproject/ray:1.13.0"
+  #   ports:
+  #     - 10001:10001
+  #     - 8265:8265
+  #   command: bash -c "
+  #     ray start --head --dashboard-host 0.0.0.0 --num-cpus=20 --num-gpus=1 --include-dashboard true 
+  #     && tail -f /dev/null"
+
+      # && serve start --address ray://0.0.0.0:10001 -n default --http-host 0.0.0.0 --http-port 8000 --http-location EveryNode 

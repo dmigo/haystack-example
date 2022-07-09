@@ -9,7 +9,7 @@ components:
       password: "admin"
       port: 9200
       scheme: "http"
-      index: "document-benchmark-sparse-1"
+      index: "document-benchmark-sparse-ray-1"
       similarity: "cosine"
   - name: Reader
     type: FARMReader
