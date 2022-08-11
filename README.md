@@ -20,6 +20,19 @@ We also need to install the python dependencies.
 pip install -r requirements.txt
 ```
 
+To start ray serve
+
+```shell
+ray start --head --dashboard-host 0.0.0.0 --num-cpus=10 --num-gpus=1 --include-dashboard true
+serve start --address ray://0.0.0.0:10001 -n default --http-host 0.0.0.0 --http-port 8000
+```
+
+To spin up pipelines
+
+```shell
+python spin_up.py
+```
+
 Now we need to prepare and index our data by semantics. We will use Game of Thrones wiki data. The data will be downloaded from a prepared archive and stored in opensearch. Depending on your internet connection and wether your machine has a GPU this step might take quite some time.
 
 ```shell
