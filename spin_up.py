@@ -1,4 +1,4 @@
-import sys
+import os
 import logging
 from pathlib import Path
 from typing import Any, Dict, List
@@ -13,17 +13,23 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 CONFIG_PATH = Path("./config/sparse.yaml")
+DATA_LOCAL_PATH = Path("./data/wiki_gameofthrones_txt")
 
 
-@serve.deployment
+@serve.deployment(
+    _autoscaling_config={
+        "min_replicas": 1,
+        "max_replicas": 10,
+    },
+    version="v1",
+)
 class QueryPipeline:
     def __init__(self, config: Dict[str, Any]):
-        self.query_pipelilne = Pipeline.load_from_config(config, "query")
+        self.query_pipeline = Pipeline.load_from_config(config, "query")
 
     async def __call__(self, request: Request):
-        body = await request.json()
-        question = body.get("question", "Who plays Arya Stark?")
-        result = self.query_pipelilne.run(question)
+        question = request.query_params["question"]
+        result = self.query_pipeline.run(question)
         return result
 
 
@@ -33,10 +39,16 @@ class IndexingPipeline:
         logger.info("Starting")
         self.indexing_pipeline = Pipeline.load_from_config(config, "indexing")
 
+    @serve.batch(max_batch_size=100, batch_wait_timeout_s=60)
+    async def index_batch(self, requests: List[Request]):
+        file_paths = [
+            os.path.join(DATA_LOCAL_PATH, request.query_params["file"])
+            for request in requests
+        ]
+        self.indexing_pipeline.run(file_paths=file_paths)
+
     async def __call__(self, request: Request):
-        body = await request.json()
-        file_path = body.get("file_path")
-        self.indexing_pipeline.run(file_paths=file_path)
+        await self.index_batch(request)
 
 
 def spin_up():
@@ -52,4 +64,6 @@ def spin_up():
 
 
 if __name__ == "__main__":
+    logger.warning("Starting pipelines")
     spin_up()
+    logger.warning("Pipelines started")
